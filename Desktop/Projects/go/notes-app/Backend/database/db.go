@@ -1,6 +1,7 @@
 package database
 
 import (
+	"backend/models"
 	"log"
 
 	"gorm.io/driver/sqlite"
@@ -12,6 +13,9 @@ var DB *gorm.DB
 func connectDB() {
 	db, err := gorm.Open(sqlite.Open("notes.db"), &gorm.Config{})
 	if err != nil {
-		log.Fatal("Failed to connect to database")
+		log.Fatal("Failed to connect to database", err)
+
 	}
+	db.AutoMigrate(&models.Note{})
+	DB = db
 }

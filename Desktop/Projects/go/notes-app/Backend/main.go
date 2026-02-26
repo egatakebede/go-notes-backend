@@ -1,17 +1,20 @@
 package main
 
 import (
+	"Backend/database"
 	"backend/routes"
 
 	"github.com/gin-gonic/gin"
 )
 
 func main() {
+
 	r := gin.Default()
 
-	database.connectDB()
+	database.ConnectDB()
 
 	routes.RegisterNoteRoutes(r)
-	r.Run(":6000")
+
+	r.Run(":9000")
 
 }
