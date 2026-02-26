@@ -1,0 +1,10 @@
+# Go build
+notesapp
+*.exe
+
+# SQLite database
+*.db
+
+# IDE / Editor stuff
+.vscode/
+.idea/
