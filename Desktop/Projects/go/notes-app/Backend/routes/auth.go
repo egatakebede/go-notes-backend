@@ -4,17 +4,16 @@ import (
 	"net/http"
 	"time"
 
-	"notesapp/database"
-	"notesapp/models"
+	"backend/database"
+	"backend/models"
 
 	"github.com/gin-gonic/gin"
 	"github.com/golang-jwt/jwt/v5"
 	"golang.org/x/crypto/bcrypt"
 )
 
-var jwtKey = []byte("my_secret_key") // replace with env var in real apps
+var jwtKey = []byte("my_secret_key")
 
-// RegisterAuthRoutes sets up signup and login endpoints
 func RegisterAuthRoutes(r *gin.Engine) {
 	r.POST("/signup", signup)
 	r.POST("/login", login)

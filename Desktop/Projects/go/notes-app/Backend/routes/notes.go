@@ -1,23 +1,29 @@
 package routes
 
 import (
+	"backend/controllers"
+	"backend/database"
+	"backend/models"
 	"net/http"
-	"notesapp/database"
-	"notesapp/models"
 
 	"github.com/gin-gonic/gin"
 )
 
 func RegisterNoteRoutes(r *gin.Engine) {
+	// Notes routes
 	r.GET("/notes", getNotes)
 	r.POST("/notes", createNote)
 	r.PUT("/notes/:id", updateNote)
 	r.DELETE("/notes/:id", deleteNote)
+
+	// User authentication routes
+	r.POST("/users/signup", controllers.SignUp)
+	r.POST("/users/login", controllers.SignIn)
 }
 
 func getNotes(c *gin.Context) {
 	var notes []models.Note
-	search := c.Query("search") // ?search=keyword
+	search := c.Query("search")
 
 	if search != "" {
 		database.DB.Where("title LIKE ? OR content LIKE ?", "%"+search+"%", "%"+search+"%").Find(&notes)
@@ -55,8 +61,8 @@ func updateNote(c *gin.Context) {
 
 	note.Title = input.Title
 	note.Content = input.Content
-
 	database.DB.Save(&note)
+
 	c.JSON(http.StatusOK, note)
 }
 
